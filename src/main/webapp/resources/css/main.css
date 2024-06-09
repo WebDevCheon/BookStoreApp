@@ -1,0 +1,86 @@
+@CHARSET "UTF-8";
+#main_product_slide  img , .range-image-claim-height img{
+    display: inline;
+}
+
+.main_sldie_text_area{
+margin-left: 1rem;
+    margin-right: 1rem;
+    padding-top: 1.5rem;
+    box-shadow: 0 12px 13px -6px rgba(0, 0, 0, .25);    
+    width: 95%;
+    height: auto;
+    margin-bottom: 1rem;
+
+}
+
+#main_product_slide  a:hover {
+    outline: 0;
+}
+
+#main_product_slide  a:active, a:focus, a:hover {
+    color: #2d6596;
+}
+#main_product_slide  a:hover {
+    outline: 0;
+}
+
+.product-inspirational-price{
+	    font-size: 1.3rem;
+}
+.main_sldie_text_link-area{
+	height: 100px;
+	clear: both;
+}
+
+#main_product_slide .slick-prev{
+     left: 10%; 
+     z-index: 5; 
+     top: 87%;  
+}
+ 
+#main_product_slide .slick-next{
+     right: 15%;  
+     z-index: 5; 
+     top: 87%; 
+}
+#main_product_slide .slick-prev:before, #main_product_slide .slick-next:before {
+    font-size: 50px;
+}
+#main_product_slide .slick-prev:before, #main_product_slide .slick-next:before {
+    color: #ccc;
+}
+
+#today_img{
+	max-width: 500px;
+	max-height: 734px;
+}
+
+/* 큰 기기들 (큰 데스크탑, 1200px 이상) */
+@media (min-width: 1200px) { 
+	.section-padding-100{
+		margin-left:25px;
+		margin-bottom: 150px;
+	}
+	
+	.slick-prev {
+    	left: -40px;
+	}
+	
+
+}
+
+
+
+@media (min-width: 100px) { 
+	.range-product-slider{
+	    margin-left: 10%;
+	}
+	.slick-next {
+   	 right: 0px;
+	}
+}
+
+
+
+

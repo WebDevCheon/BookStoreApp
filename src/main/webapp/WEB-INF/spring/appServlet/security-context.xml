@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:security="http://www.springframework.org/schema/security"
+	   xsi:schemaLocation="http://www.springframework.org/schema/security
+						http://www.springframework.org/schema/security/spring-security.xsd
+						http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<security:authentication-manager>
+		<security:authentication-provider ref="userAuthProvider" />
+
+		<security:authentication-provider>
+			<security:jdbc-user-service
+					data-source-ref="dataSource"
+					users-by-username-query="select Id as username,Password as password,enabled from user where Id=?"
+					authorities-by-username-query="select Id as username,authorities as authority from user where Id=?"/>
+			<security:password-encoder ref = "bcryptPasswordEncoder"/>
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+	<bean id="userAuthProvider" class="spring.myapp.shoppingmall.security.LoginAuthenticationProvider" />
+
+	<security:http pattern="/iamport-webhook" security="none" />
+	<security:http pattern="/jusoPopup" security="none" />
+
+	<security:http auto-config="true" use-expressions="true">
+		<security:intercept-url pattern="/loginForm/**" access="permitAll"/>
+		<security:intercept-url pattern="/resources/**" access="permitAll"/>
+		<security:intercept-url pattern="/login" access= "permitAll"/>
+		<security:intercept-url pattern="/joinform" access="permitAll"/>
+		<security:intercept-url pattern="/join" access="permitAll"/>
+		<security:intercept-url pattern="/" access="permitAll"/>
+		<security:intercept-url pattern="/shop" access="permitAll"/>
+		<security:intercept-url pattern="/product" access="isAuthenticated()" />
+		<security:intercept-url pattern="/showorder" access="isAuthenticated()" />
+		<security:intercept-url pattern="/showbasket" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/showcoupon" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/OrderResult" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/>
+
+		<security:form-login
+				login-page = "/loginForm"
+				authentication-failure-url="/loginForm?error"
+				username-parameter="id"
+				password-parameter="password"
+				login-processing-url="/login"
+				always-use-default-target='true'
+				authentication-success-handler-ref="loginSuccessHandler"
+		/>
+
+		<security:access-denied-handler error-page = "/access_denied_page" />
+
+		<security:logout logout-success-url="/loginForm?logout"
+						 logout-url="/logout"
+						 invalidate-session="true" />
+
+		<security:session-management>
+			<security:concurrency-control max-sessions="1" expired-url="/loginForm?duplsession"/>
+		</security:session-management>
+	</security:http>
+
+	<bean id = "loginSuccessHandler" class = "spring.myapp.shoppingmall.security.LoginSuccessHandler">
+		<property name = "loginidname" value = "id"/>
+		<property name = "defaultUrl" value = "/"/>
+	</bean>
+</beans>

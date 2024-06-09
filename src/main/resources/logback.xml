@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+    	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+    		<encoder>
+    			<Pattern>.%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg %n
+    			</Pattern>
+    		</encoder>
+    		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+    			<level>DEBUG</level>
+    		</filter>
+    	</appender>
+		
+		<!-- 하루당 로그 파일 생성 -->
+      	<appender name="dailyRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    		<File>c:/logs/spring/daily/spring.log</File>
+    		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+    		    <!-- daily rollover -->
+    			<FileNamePattern>shoppingmall.%d{yyyy-MM-dd}.log</FileNamePattern>
+    			<!-- keep 30 days' worth of history -->
+    			<maxHistory>30</maxHistory>			
+    		</rollingPolicy>
+
+    		<encoder>
+    			<Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg %n</Pattern>
+    		</encoder> 	    
+      	</appender>
+      	
+      	<!-- 분당 로그 파일 생성
+      	<appender name="minuteRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+    			<FileNamePattern>c:/logs/spring/minute/shoppingmall.%d{yyyy-MM-dd_HH-mm}.log</FileNamePattern>
+    			<maxHistory>30</maxHistory>			
+    		</rollingPolicy>
+
+    		<encoder>
+    			<Pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</Pattern>
+    		</encoder> 	    
+      	</appender>  	
+		-->
+		
+    	<logger name="spring.myapp.shoppingmall" additivity="false">
+    	    <level value="DEBUG" />
+    		<appender-ref ref="dailyRollingFileAppender"/>
+    		<appender-ref ref="minuteRollingFileAppender"/>
+    		<appender-ref ref="consoleAppender" />
+    	</logger>
+
+</configuration>

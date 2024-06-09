@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+.product_price{
+	color: #dc3545;
+}
+.sub_author{
+	display: block;
+	font-size: 0.8rem;
+}
+
+#todayBook_row img{
+cursor: pointer;	
+}
+
+
+#infoset_introduce{
+	margin-top: 50px;	
+}
+@media (min-width: 415px){
+   .range-product-slider {
+	    margin-left: 5%; 
+   }	
+	.slick-next {
+		 right: 1%;
+	}
+}
